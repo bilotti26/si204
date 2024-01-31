@@ -3,9 +3,9 @@
 using namespace std;
 
 double getMax(double x1,double x2,double x3) {
-  if ((x1 > x2) && (x1 > x3)) {
+  if ((x1 >= x2) && (x1 >= x3)) {
     return x1;
-  } else if ((x2 > x1) && (x2 > x3)) {
+  } else if ((x2 >= x1) && (x2 >= x3)) {
     return x2;
   } else {
     return x3;
@@ -13,9 +13,9 @@ double getMax(double x1,double x2,double x3) {
 }
 
 double getMin(double x1,double x2,double x3) {
-  if ((x1 < x2) && (x1 < x3)) {
+  if ((x1 <= x2) && (x1 <= x3)) {
     return x1;
-  } else if ((x2 < x1) && (x2 < x3)) {
+  } else if ((x2 <= x1) && (x2 <= x3)) {
     return x2;
   } else {
     return x3;
