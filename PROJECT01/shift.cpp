@@ -1,7 +1,7 @@
 //Assignment: PROJECT 1
 //Name:       ANDREW BILOTTI
 //Alpha:      260516
-//rowshift.cpp
+//shift.cpp
 #include <iostream>
 #include <fstream>
 
@@ -106,8 +106,8 @@ int main() {
           //j (row #) in between the x value column shift and its width + column shift
           //i (column #) in between the y value row shift & its height + row shift
           if (
-              ((j > colshift) && (j < width1 + colshift)) && 
-              ((i > rowshift) && (i < height1 + rowshift))
+              ((j >= colshift) && (j < width1 + colshift)) && 
+              ((i >= rowshift) && (i < height1 + rowshift))
              ) {
             fin_fg >> r1 >> g1 >> b1;
             inShift = true;

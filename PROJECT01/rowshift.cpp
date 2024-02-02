@@ -1,7 +1,11 @@
 //Assignment: PROJECT 1
 //Name:       ANDREW BILOTTI
 //Alpha:      260516
-//rowshift.cpp
+//rowshift.cpp v2 (improved and more efficient)
+//Comments: basically I used a new approach for shift.cpp,
+//it was just about as efficient as I can get w/o multithreading,
+//and I deleted the old rowshift.cpp to use this much more
+//efficient method
 #include <iostream>
 #include <fstream>
 
@@ -17,7 +21,7 @@ int main() {
   cout << "Background file: ";
   cin >> background_file;
 
-  //Row shift
+  //Row shift 
   int rowshift;
 
   //Prompt the user for the row shift
@@ -27,7 +31,6 @@ int main() {
   //Output file
   cout << "Output file: ";
   cin >> output_file;
-  
 
   //Load the input file
   ifstream fin_fg(foreground_file);
@@ -37,9 +40,10 @@ int main() {
   ofstream fout(output_file);
 
   //Declare the width, height, and largest possible value for fg & bg
-  int width1, height1, largest_possible_value1;
-  int width2, height2, largest_possible_value2;
+  int fg_width, fg_height, largest_possible_value1;
+  int bg_width, bg_height, largest_possible_value2;
   int largest_possible_value;
+
   //Declare the file header
   string file_header;
 
@@ -61,17 +65,17 @@ int main() {
     fout << file_header << endl;
     
     //Second line: width and height
-    fin_fg >> width1 >> height1;
-    fin_bg >> width2 >> height2;
+    fin_fg >> fg_width >> fg_height;
+    fin_bg >> bg_width >> bg_height;
 
     //Check to make sure that the foreground file is smaller or eq
     //to the background file
-    if (!((width1 <= width2) && (height1 + rowshift <= height2))) {
+    if (!((fg_width <= bg_width) && (fg_height + rowshift <= bg_height))) {
       cout << "Error: The foreground goes past the background" << endl;
       return 0;
     }
     //Header is the greater width and height
-    fout << width2 << " " << height2 << endl;
+    fout << bg_width << " " << bg_height << endl;
 
     //Third line: largest_possible_value
     //Simple hack to get the biggest largest possible value from the two files
@@ -88,48 +92,45 @@ int main() {
     fout << largest_possible_value << endl;
     
     // For loop
-    // Quick note, width2 and height2 is gonna be the biggest width and height
-    // We previously checked to make sure that they are the bigger of the two
-    for (int i = 0; i < height2; i++) {
+    // Quick note, bg_width and bg_height is gonna be the biggest 
+    // Width and height because the background has more pixels than foreground
+    for (int i = 0; i < bg_height; i++) {
       //If the i value (column) is less than the rowshift, then only output
       //the background
-      if (i <= rowshift) {
-        for (int j = 0; j < width2; j++) {
-          //rgb values for bg
-          int r,g,b;
-
-          //Fetch the rgb values from the fg
-          fin_bg >> r >> g >> b;
-
-          //Put the rgb values on the output file
-          fout << r << " " << g << " " << b << " ";
-        }
-      } else {
-        //Otherwise, check if it each pixel is ONLY GREEN for the fg and 
-        //if the pixel is not, then output it over the BG.
-        for (int j = 0; j < width2; j++) {
+      for (int j = 0; j < bg_width; j++) {
           //rgb values for fg and background
           int r1,g1,b1,r2,g2,b2;
+          bool inShift = false;
 
-          //fetch the fg and bg values of the pixels
-          if (j < width1)
+          //Only read the tiny fg file if it is within the parameters
+          //j (row #) in between the x value column shift and its width 
+          //i (column #) in between the y value's row shift 
+          //  & its height + row shift
+          if (
+              ((j < fg_width)) && 
+              ((i >= rowshift) && (i < fg_height + rowshift))
+             ) {
             fin_fg >> r1 >> g1 >> b1;
-            //only read the bg values if the j value is less than its width
+            inShift = true;
+          }
+
+          //Since we're drawing OVER the bg, we're always gonna read the bg 
           fin_bg >> r2 >> g2 >> b2;
           
-
-          //If the foreground (greenscreen) file is NOT green
+          //This if statement has been rewritten for efficiency
+          //If the pixel is not "in its shift", then draw the bg pixel
+          //After, check if the foreground (greenscreen) file is NOT green
           //(that is, r1 and b1 != 0 or g1 != 255)
-          //Then put that pixel on the output
-          //Also check that the column has not exceeded the width 
-          //of the smaller image
-          if ((j < width1) && ((r1 != 0) || (g1 < largest_possible_value1) || (b1 != 0))) {
+          //If these two conditions are met, then draw the foreground pixel.
+          if (
+              (inShift == true)
+              && ((r1 != 0) || (g1 < largest_possible_value1) || (b1 != 0))
+             ) {
             fout << r1 << " " << g1 << " " << b1 << " ";
           }
           else {
             fout << r2 << " " << g2 << " " << b2 << " ";
           }
-        }
       }
 
       //At the end of each line, output an endl
