@@ -83,7 +83,7 @@ int main() {
         double tempF = ((9.0/5.0) * temp) + 32.0;
 
         //Output to file
-        fout << date << " " << (hour + 1) << '\t' << tempF << endl;
+        fout << date << '\t' << (hour + 1) << '\t' << tempF << endl;
       }
     }
 

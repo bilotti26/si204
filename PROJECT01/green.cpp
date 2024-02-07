@@ -31,11 +31,11 @@ int main() {
 
   //Check to make sure that the file can be read
   if (!fin_fg || !fin_bg) {
-    cout << "Error: Input file not found.";
+    cout << "Error: Input file not found" << endl;
     return 1;
   }
   else if (!fout) {
-    cout << "Error: Output file not writable";
+    cout << "Error: Output file not writable" << endl;
     return 1;
   }
   else {
@@ -52,7 +52,7 @@ int main() {
 
     //Check to make sure the two files have the same height
     if (!((width1 == width2) && (height1 == height2))) {
-      cout << "Error: width and height of the two files don't match" << endl;
+      cout << "Error: Images have different sizes" << endl;
       return 1;
     }
     fout << width1 << " " << height1 << endl;
@@ -95,6 +95,9 @@ int main() {
       }
       fout << endl;
     }
+    //Output
+    
+    cout << "Image saved to " << output_file << endl;
 
     //done
     fin_bg.close();

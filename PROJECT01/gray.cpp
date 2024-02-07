@@ -27,11 +27,11 @@ int main() {
 
   //Check to make sure that the file can be read
   if (!fin) {
-    cout << "Error: Input file not found.";
+    cout << "Error: Input file not found" << endl;
     return 1;
   }
   else if (!fout) {
-    cout << "Error: Output file not writable";
+    cout << "Error: Output file not writable" << endl;
     return 1;
   }
   else {
@@ -63,6 +63,9 @@ int main() {
     //done
     fin.close();
     fout.close();
+
+    //Output the file
+    cout << "Image saved to " << output_file << endl;
   }
 
   return 0;

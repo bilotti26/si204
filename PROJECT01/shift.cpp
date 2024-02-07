@@ -1,7 +1,9 @@
 //Assignment: PROJECT 1
 //Name:       ANDREW BILOTTI
 //Alpha:      260516
-//shift.cpp
+//shift.cpp v2
+//Comments: rewritten for efficiency & clarity, I believe this is the best we
+//can get without multithreading :)
 #include <iostream>
 #include <fstream>
 
@@ -49,11 +51,11 @@ int main() {
 
   //Check to make sure that the file can be read
   if (!fin_fg || !fin_bg) {
-    cout << "Error: Input file not found.";
+    cout << "Error: Input file not found" << endl;
     return 0;
   }
   else if (!fout) {
-    cout << "Error: Output file not writable";
+    cout << "Error: Output file not writable" << endl;
     return 0;
   }
   else {
