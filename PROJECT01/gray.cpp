@@ -20,8 +20,10 @@ int main() {
   
   //Load the output file
   ofstream fout(output_file);
-  //Declare the width, height, and largest possible value to be used in future for loops
+
+  //Declare the width, height, and largest possible value to be used in loops
   int width,height,largest_possible_value;
+
   //Declare the file header
   string file_header;
 

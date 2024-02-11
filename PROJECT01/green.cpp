@@ -24,8 +24,9 @@ int main() {
   //Load the output file
   ofstream fout(output_file);
 
-  //Declare the width, height, and largest possible value to be used in future for loops
-  int width1, height1, largest_possible_value1, width2, height2, largest_possible_value2, largest_possible_value;
+  //Declare the width, height, and largest possible value
+  int width1, height1, largest_possible_value1;
+  int width2, height2, largest_possible_value2, largest_possible_value;
   //Declare the file header
   string file_header;
 

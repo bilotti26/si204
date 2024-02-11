@@ -105,8 +105,10 @@ int main() {
           bool inShift = false;
 
           //Only read the tiny fg file if it is within the parameters
-          //j (row #) in between the x value column shift and its width + column shift
-          //i (column #) in between the y value row shift & its height + row shift
+          //j (row #) in between the x value column shift
+          //and its width + column shift
+          //i (column #) in between the y value row shift
+          //& its height + row shift
           if (
               ((j >= colshift) && (j < width1 + colshift)) && 
               ((i >= rowshift) && (i < height1 + rowshift))
@@ -114,12 +116,13 @@ int main() {
             fin_fg >> r1 >> g1 >> b1;
             inShift = true;
           }
-          //Since we're drawing OVER the background, we're always gonna read the background 
+          //Since we're drawing OVER the background,
+          //we're always gonna read the background 
           fin_bg >> r2 >> g2 >> b2;
           
           //This if statement has been rewritten for efficiency
-          //It only checks the rest of the loop if the conditions we checked for in the 
-          //if statement on whether or not the given values & shifts.
+          //It only checks the rest of the loop if the conditions we checked 
+          //for in the if statement on whether or not the given values & shifts
 
           //THEN, If the foreground (greenscreen) file is NOT green
           //(that is, r1 and b1 != 0 or g1 != 255)
