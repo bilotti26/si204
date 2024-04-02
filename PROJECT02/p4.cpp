@@ -1,24 +1,31 @@
 //PROJECT 2
-//PART 3
+//PART 4
 //ANDREW BILOTTI
 //260516
 //2024-03-08
 #include <iostream>
 using namespace std;
 
-//Prototypes
+//Prototypes and their descriptions
+
+//Create a deck of cards, kings queens aces etc.
 int* createDeck();
+//Print an array in the formatting we want to use
 void printArray(int* arr, int l);
+//Deal a card
 void deal(int* deck, int* topcard, int* hand, int* card);
+//Shuffle a deck
+void shuffle(int* arr, int l, int u);
 
 int main() {
+  //Statics go here!
+  static int length = 52;
+
+  //Create the array and some card deck specific variables
   int* deck = createDeck();
-  int length = 52;
   int topCard = 0;
 
-  printArray(deck, length);
-  cout << endl;
-
+  //Player and dealer decks!
   //Players hand cannot be more than the deck, so max size is 52
   int* phand = new int[length];
   int pcard = 0;
@@ -26,10 +33,21 @@ int main() {
   int* dhand = new int[length];
   int dcard = 0;
 
-  //Deal first two cards for player & dealer
-  //Yeah yeah i know i can just set the arrays manually, but I like the
-  //function that I wrote
+  //Do we want to shuffle? If so, run the shuffling algorithm with seed
+  cout << "Shuffle: [n | u <seed>]: ";
+  char c;
+  cin >> c;
+  if (c == 'u')  {
+   int seed;
+   cin >> seed;
+   shuffle(deck, length, seed);
+  }
 
+  //Print the shuffled (or unshuffled) array
+  printArray(deck, length);
+  cout << endl;
+
+  //Deal first two cards for player & dealer
   deal(deck, &topCard, phand, &pcard);
   deal(deck, &topCard, dhand, &dcard);
   deal(deck, &topCard, phand, &pcard);
@@ -49,6 +67,7 @@ int main() {
     printArray(dhand, dcard);
     cout << endl;
 
+    //Take commands and do what they do
     string command;
     cout << "Round " << round << " " <<
       ((turn) ? "Dealer" : "Player") << "'s turn\n";
@@ -66,7 +85,7 @@ int main() {
       }
     } 
 
-    //Increment round after player and dealers turn
+    //Increment round after player and dealer are done for the round
     if (turn)
       round++;
 
@@ -81,6 +100,7 @@ int main() {
   printArray(dhand, dcard);
 
   //done :)
+
   delete [] deck;
   delete [] phand;
   delete [] dhand;
@@ -121,4 +141,14 @@ void deal(int* deck, int* topcard, int* hand, int* card) {
   //Add one to each of the cards
   *topcard += 1;
   *card += 1;
+}
+
+void shuffle(int* arr, int length, int u) {
+  srand(u);
+  for(int i = 0; i < length; i++) {
+    int j = rand() % 52;
+    int tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+  }
 }

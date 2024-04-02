@@ -45,6 +45,12 @@ int main() {
     }
 
   }
+  //done
+  delete [] deck;
+  delete [] phand;
+  delete [] dhand;
+
+  return 0;
 }
 
 int* createDeck() {

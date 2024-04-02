@@ -17,6 +17,9 @@ int main() {
   cout << "[";
   printArray(deck, length);
   cout << "]" << endl;
+
+  delete [] deck;
+  return 0;
 }
 
 int* createDeck() {
