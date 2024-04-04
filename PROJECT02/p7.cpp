@@ -9,29 +9,32 @@ using namespace std;
 
 //Prototypes and their descriptions
 
-//game so I can call it again...
+//Main game function, run in main() and run again 
+// if there is a tie as an end result
+// Argument determines whether or not the game will use the srand function
 int game(bool doShuffle);
 //Create a deck of cards, kings queens aces etc.
 int* createDeck();
 //Print an array in the formatting we want to use
-//Reworked as of part 5, added scores as of part 6, added boolean to show 
-//dealer's top card as of part 7
 void printArray(int* player, int* dealer, int l, bool endGame); 
 //Internally make a number into a human readable card:
 string cardString(int num);
-//scores the hand
+//Scores the hand blackjack style
 int score(int* hand, int l);
 //Deal a card
 void deal(int* deck, int* topcard, int* hand, int* card);
 //Shuffle a deck
 void shuffle(int* arr, int l);
 
+//Main just starts the game by calling the main game function, so that if 
+//there is a tie, the game can "reset" itself by calling itself
 int main() {
   return game(true);
 }
 
+//"Main" game function 
 int game(bool doShuffle) {
-  //Statics go here!
+  //Constants so I don't mess more things up
   static int length = 52;
 
   //Create the array and some card deck specific variables
@@ -46,9 +49,10 @@ int game(bool doShuffle) {
   int* dhand = new int[length];
   int dcard = 0;
 
-  //Only called on first run - not shuffled randomly again the second time 
+  //Only called on first run - not shuffled randomly if game is run again
+  // because of tie
   if (doShuffle) {
-  //Do we want to shuffle? If so, run the shuffling algorithm with seed
+    //Do we want to shuffle? If so, run the shuffling algorithm with seed
     cout << "Shuffle: [n | u <seed>]: ";
     char c;
     cin >> c;
@@ -60,10 +64,10 @@ int game(bool doShuffle) {
     }
     cout << endl;
   } else {
+    //Shuffle without the user options or srand
     shuffle(deck, length);
   }
-  //Deck no longer printed as of part 5
-
+  
   //Deal first two cards for player & dealer
   deal(deck, &topCard, phand, &pcard);
   deal(deck, &topCard, dhand, &dcard);
@@ -79,7 +83,8 @@ int game(bool doShuffle) {
   bool playerS = false;
   bool dealerS = false;
 
-  //While loop
+  //Main while loop - take input, increment rounds, and stop once either
+  //Both player and dealer stand or someone busts
   while (!(playerS && dealerS) 
       && score(phand, pcard) < 21 
       && score(dhand, dcard) < 21) {
@@ -87,7 +92,7 @@ int game(bool doShuffle) {
     printArray(phand, dhand, ((pcard > dcard) ? pcard : dcard), false);
 
     //Check if controlled by player or AI (dealer)
-    //turn is false for player so:
+    //Player input first:
     if (!turn) {
       //Take either "hit" or "stand".
       string command;
@@ -105,7 +110,9 @@ int game(bool doShuffle) {
         playerS = true;
       }
 
-    } else {
+    } 
+    //"AI" dealer
+    else {
       cout << "Round " << round << " " << "Dealer's turn" << endl;
       cout << "hit or stand ? [h/s]";
      
@@ -158,6 +165,7 @@ int game(bool doShuffle) {
   return 0;
 }
 
+//Create a standard deck of 52 cards
 int* createDeck() {
   //num in ABC format
   //A: suites- 1 = clubs, 2 = diamonds, 3 = hearts, 4 = spades
@@ -205,7 +213,7 @@ void printArray(int* player, int* dealer, int l, bool endGame) {
 
 //Gets a 3 digit number then makes it into a human readable card name
 string cardString(int num) {
-  //ABC - A will be suites 
+  //ABC - A will be suites, BC will be card values 1-10 numerical 11-14 JQKA
   int suite = num / 100;
   string suiteS;
   //1 clubs 2 diamons 3 hearts 4 spades
@@ -244,6 +252,7 @@ string cardString(int num) {
       numberS = to_string(number);
   }
 
+  //Returns in card and suite format, such as A♠
   return numberS + suiteS;
 }
 //Scores the hand
@@ -287,6 +296,7 @@ void deal(int* deck, int* topcard, int* hand, int* card) {
   *card += 1;
 }
 
+//Shuffle the array with std::rand()
 void shuffle(int* arr, int length) { 
   for(int i = 0; i < length; i++) {
     int j = rand() % 52;
