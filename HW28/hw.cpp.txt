@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int calspace(int num);
+
+int main()
+{
+  int n;
+  cout << "Integer? ";
+  cin >> n;
+
+  cout << "#spaces= " << calspace(n) << endl;
+  return 0;
+}
+
+int calspace(int num)
+{
+  int sp = 0;
+  
+  if( num < 0 ) 
+  {
+    sp++;         // +1 for '-' sign
+    num = -num;   // make num positive 
+  }
+
+  // keep dividing num by 10 to calculate #spaces for num
+  while( num >= 10 )
+  {
+    sp++;
+    num /= 10;
+  }
+
+  // +1 to account for the last digit. 
+  // For example, calspace(2) should return 1
+  return sp+1;
+}
