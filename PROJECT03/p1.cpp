@@ -2,46 +2,39 @@
 //PROJECT 3 Part 1
 //10APR2004
 #include <iostream>
-#include <fstream>
-//Lib + dependencies + debug
 #include <unistd.h>
 #include <cstdlib>
 #include "easycurses.h"
+#include "board.h"
+
 using namespace std;
 
-struct pixel {
-  int col; //col pos
-  int row; //row pos
-  char c; //letter to be displayed
-  int type; //look at next comment
+int main() {
+  cout << "board file: ";
+  string fileName;
+  cin >> fileName;
+  board b = readFile(fileName);
+  
+  startCurses();
+
+  drawBoard(b);
+  refreshWindow();
+
+  // Loop forever until user enters 'q'
+  char c;
+  do {
+    usleep(150000);
+    c = inputChar();
+  } while ( c != 'y' );
+
+  // Close ncurses
+  endCurses();
+
+  cout << "Player start: " << b.pStart << endl;
+  cout << "Spawn spots:";
+  for(int i = 0; i < b.numSpawns; i++) {
+    cout << " " << b.spawns[i];
+  } cout << endl;
+  return 0;
 }
 
-//Strategy: return 4 arrays of pixels:
-//  (0) walls: player collides off of these, #
-//  (3) spawn spots: don't print
-//  (2) player spawn spot: print
-//  (1) goals: print
-
-pixel** readIn(string filename, int wRow, int wCol) {
-  //File handling
-  ifstream fin(filename);
-  //Give error if file is not readable
-  if (!fin) {
-    cout << "Error: File can't found or can't read file!";
-    exit;
-  }
-
-  //Read width and height of the board
-  char dc;
-  int row, col, spawns;
-  fin >> row >> dc >> col >> spawns;
-
-  //Create the arrays
-  pixel** p = new pixel*[col];
-    for(int i = 0; i < col; i++) {
-      p[i] = new pixel*[row];
-      for(int j = 0; j < col; i++) {
-        p[i + j] =
-      }
-    }
-}

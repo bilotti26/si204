@@ -1,0 +1,29 @@
+==143407== Memcheck, a memory error detector
+==143407== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==143407== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==143407== Command: ./hw
+==143407== 
+==143407== 
+==143407== Process terminating with default action of signal 2 (SIGINT)
+==143407==    at 0x4BC67E2: read (read.c:26)
+==143407==    by 0x4B3EC35: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:516)
+==143407==    by 0x4B3FD95: _IO_default_uflow (genops.c:362)
+==143407==    by 0x49788C0: __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::underflow() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==143407==    by 0x49869D5: std::istream::sentry::sentry(std::istream&, bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==143407==    by 0x492E166: std::basic_istream<char, std::char_traits<char> >& std::operator>><char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==143407==    by 0x109381: main (in /mnt/c/Users/m260516/Desktop/si204/HW31/hw)
+==143407== 
+==143407== HEAP SUMMARY:
+==143407==     in use at exit: 74,752 bytes in 3 blocks
+==143407==   total heap usage: 3 allocs, 0 frees, 74,752 bytes allocated
+==143407== 
+==143407== LEAK SUMMARY:
+==143407==    definitely lost: 0 bytes in 0 blocks
+==143407==    indirectly lost: 0 bytes in 0 blocks
+==143407==      possibly lost: 0 bytes in 0 blocks
+==143407==    still reachable: 74,752 bytes in 3 blocks
+==143407==         suppressed: 0 bytes in 0 blocks
+==143407== Rerun with --leak-check=full to see details of leaked memory
+==143407== 
+==143407== For lists of detected and suppressed errors, rerun with: -s
+==143407== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
