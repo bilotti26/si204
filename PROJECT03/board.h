@@ -13,7 +13,17 @@ Pos goal;       //Player goal
   int numSpawns;
 };
 
+struct entity {
+  Pos p;
+  char c;   //Character to display
+  int dir;  //Direction
+  int v;    //Velocity
+}
+
 board readFile(string fileName);
 void drawBoard(board b);
 
 ostream& operator<< (ostream& os, Pos p);
+
+void move(player& P);
+void drawEntities(player* arr, int n);

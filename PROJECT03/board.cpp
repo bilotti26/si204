@@ -69,3 +69,40 @@ ostream& operator<< (ostream& os, Pos p) {
   cout << '(' << p.row << ',' << p.col << ')';
   return os;
 }
+
+void move(entity& P) {
+  //Get keyboard
+  char key = inputChar();
+  int velX;
+  int velY;
+  switch (key) {
+    case 'w':
+      P.d = 0; //North
+      break;
+    case 'a':
+      P.d = 1; //East
+      break;
+    case 's':
+      P.d = 2; //South 
+      break;
+    case 'd':
+      P.d = 3; //East 
+      break;
+    default:
+      break;
+  }
+}
+
+void drawEntities(player* arr, int n) {
+  //Clear previous characters, update position, draw again
+  for(int i = 0; i < n; i++) {
+    if (arr[i].v == 1) {
+      //Draw a space over the characters
+      drawChar(' ', arr[i].p.row, arr[i].p.col);
+      //Update position in accordance with velocity
+      arr[i].p = step(arr[i].p, arr[i].d);
+      //Redraw the characters 
+      drawChar(arr[i].p.c, arr[i].p.row, arr[i].p.col);
+    }
+  }
+}
